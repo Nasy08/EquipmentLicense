@@ -1,24 +1,47 @@
-<?php
-session_start();
-include "../db/config.php"; 
-
-
-// Check if the form has been submitted
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-  // Get the username and password from the form
-  $id = $_POST['id'];
-  $password = $_POST['password'];
-
-  // Check if the username and password are valid
-  if ($id == 'id' && $password == 'password') {
-    
-    $_SESSION['id'] = $id;
-    header('Location: home.php');
-  } else {
-    // The login is unsuccessful
-    echo 'Invalid username or password.';
-  }
-}
-
+<?php 
+session_start(); 
+include_once "../db/config.php";  
+ 
+// Get user input 
+$id = $_POST['id']; 
+$password = $_POST['password']; 
+ 
+// Sanitize user input to prevent SQL injection 
+$id = mysqli_real_escape_string($conn, $id); 
+$password = mysqli_real_escape_string($conn, $password); 
+ 
+// Perform database query 
+$sql = "SELECT * FROM user WHERE id = '$id'"; 
+$result = $conn->query($sql); 
+ 
+if ($result === false) { 
+    echo "Query error: " . $conn->error; 
+    exit; 
+} 
+ 
+if ($result->num_rows == 1) { 
+    $row = $result->fetch_assoc(); 
+ 
+    // Verify password 
+    if ($password == $row['password']) { // This is plain text comparison 
+        $_SESSION['logged_in'] = true; 
+        $_SESSION['name'] = $row['name']; 
+        $_SESSION['id'] = $id; 
+        $_SESSION['nohp'] = $row['nohp']; 
+        $_SESSION['email'] = $row['email']; 
+        $_SESSION['type'] = $row['type']; 
+ 
+        if ($row['type'] == 'admin') {
+            header("Location: ../admin-home.php"); // Redirect admin with jawatan=cafe to cafe orders page 
+        } else if ($row['type'] == 'student') { 
+            header("Location: ../student-home.php"); // Redirect non-admin users to this page 
+        } else { 
+            echo "<script>alert('Invalid user type.'); window.location.href = 'login.php';</script>"; 
+        } 
+    } else { 
+        echo "<script>alert('Invalid login credentials.'); window.location.href = 'login.php';</script>"; 
+    } 
+} else { 
+    echo "<script>alert('Invalid login credentials.'); window.location.href = 'login.php';</script>"; 
+} 
 ?>

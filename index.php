@@ -13,13 +13,10 @@
     <form action="function/login.php" method="POST">
         <input type="text" name="id" placeholder="ID">
         <input type="password" name="password" placeholder="Password">
-        <input type="submit" value="Login">
         <a href="register.php">Register</a>
+        <button type="submit">Login</button>
     </form>
 
-</body>
-
-</html>
 </body>
 
 </html>
