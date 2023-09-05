@@ -8,6 +8,7 @@ $result = mysqli_query($conn, "SELECT * FROM equipment ORDER BY id DESC");
 
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link
         href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
         rel="stylesheet" />
@@ -28,6 +29,7 @@ $result = mysqli_query($conn, "SELECT * FROM equipment ORDER BY id DESC");
             </div>
         </div>
     </nav>
+    <button class="bg-blue-700 text-white font-bold rounded px-3 py-2">BACK <i class="fa fa-undo" aria-hidden="true" onclick="history.back()"></i></button>
     <section class="bg-gray-50 p-3 sm:p-5">
         <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
             <!-- Start coding here -->
@@ -140,7 +142,7 @@ $result = mysqli_query($conn, "SELECT * FROM equipment ORDER BY id DESC");
                                 <td class="px-2 py-3 text-center"><?php echo $r['course']; ?></td>
                                 <td class="px-2 py-3 text-center"><?php echo $r['item_name']; ?></td>
                                 <td class="px-2 py-3 text-center"><?php echo $r['item_reason']; ?></td>
-                                <td class="px-2 py-3 text-center" src="./item_image/"><?php echo $r['image']; ?></td>
+                                <?php echo "<td><img src='item_image/" .$r['image'] . "'alt='" .$r['item_name'] ."' width='100'></td>"?>
                                 <td class="d-flex justify-content-center text-center">
                                     <a href='function/approve.php?id=<?php echo $r['id'];?>'><button
                                             class="rounded-md bg-blue-700 text-white font-medium p-2 m-2">ACCEPT</button></a>
