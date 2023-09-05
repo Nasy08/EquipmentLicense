@@ -1,45 +1,5 @@
 <?php
 include_once "db/config.php";
-
-// Check if the form has been submitted
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-  // Get the form data
-  $name = $_POST['name'];
-  $id = $_POST['id'];
-  $nohp = $_POST['nohp'];
-  $email = $_POST['email'];
-  $password = $_POST['password'];
-  $confirm_password = $_POST['confirm_password'];
-  $type = $_POST['type'];
-  
-
-  // Validate the form data
-  if ($password != $confirm_password) {
-    echo 'The passwords do not match.';
-  } else {
-    // The registration is successful
-
-    // Check if the username already exists
-    $sql = "SELECT * FROM user WHERE name='$name'";
-    $result = mysqli_query($conn, $sql);
-
-    if (mysqli_num_rows($result) > 0) {
-      echo 'The username already exists.';
-    } else {
-      // The username is available, so insert the new user into the database
-      $sql = "INSERT INTO user (name, id, nohp, email, password, confirm_password, type) VALUES ('$name', '$id', '$nohp', '$email', '$password', '$confirm_password', '$type')";
-      mysqli_query($conn, $sql);
-
-      // Redirect the user to the login page
-      header('Location: index.php');
-    }
-
-    // Close the database connection
-    mysqli_close($conn);
-  }
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="max-w-xl mx-auto bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
 <h1 class="text-4xl font-semibold">Register</h1>
 <br>
-<form class="flex-col space-y-4" action="register.php" method="POST">
+<form class="flex-col space-y-4" action="function/register-function.php" method="POST">
     <label class="block font-medium text-gray-700" for="name">NAME</label>
 <input class="shadow-sm block w-full py-2 sm:text-sm rounded-md text-gray-800 disabled:bg-gray-200 sm:text-sm border-gray-300 focus:ring-primary-500 focus:border-primary-500 placeholder-gray-400 focus:outline-none  " type="text" name="name" placeholder="Name">
     <label class="block font-medium text-gray-700" for="id">STAFF ID/NO.NDP</label>
@@ -85,6 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </form>
 </div>
 </div>
-
+ </select>
 </body>
 </html>
