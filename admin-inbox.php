@@ -116,15 +116,16 @@ $result = mysqli_query($conn, "SELECT * FROM equipment ORDER BY id DESC");
                     </div>
                 </div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-md text-gray-500 dark:text-gray-400">
-                        <thead class="text-md text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <table class="w-full text-sm font-medium text-gray-500 dark:text-gray-400">
+                        <thead class="text-md text-white uppercase bg-gray-50 dark:bg-gray-700">
                             <tr>
-                                <th scope="col" class="px-4 py-3">Nama</th>
-                                <th scope="col" class="px-4 py-3">ID(NDP)</th>
-                                <th scope="col" class="px-4 py-3">Kursus</th>
-                                <th scope="col" class="px-4 py-3">Semester</th>
-                                <th scope="col" class="px-4 py-3">Peringkat</th>
-                                <th scope="col" class="px-8 py-3">Tindakan</th>
+                                <th scope="col" class="px-2 py-3">Nama</th>
+                                <th scope="col" class="px-2 py-3">ID(NDP)</th>
+                                <th scope="col" class="px-2 py-3">Kursus</th>
+                                <th scope="col" class="px-2 py-3">Nama Barang</th>
+                                <th scope="col" class="px-2 py-3">Sebab</th>
+                                <th scope="col" class="px-2 py-3">Gambar</th>
+                                <th scope="col" class="px-2 py-3">Tindakan</th>
                             </tr>
                         </thead>
                         <tbody id="showiddata">
@@ -134,17 +135,18 @@ $result = mysqli_query($conn, "SELECT * FROM equipment ORDER BY id DESC");
                             $result = mysqli_query($conn, $sql); 
                             while ($r = mysqli_fetch_array($result)){
                             ?>
-                                <td class="px-4 py-3 text-left"><?php echo $r['name']; ?></td>
-                                <td class="px-4 py-3 text-center"><?php echo $r['id']; ?></td>
-                                <td class="px-4 py-3 text-center"><?php echo $r['course']; ?></td>
-                                <td class="px-4 py-3 text-center"><?php echo $r['sem']; ?></td>
-                                <td class="px-4 py-3 text-center"><?php echo $r['level']; ?></td>
+                                <td class="px-2 py-3 text-left"><?php echo $r['name']; ?></td>
+                                <td class="px-2 py-3 text-center"><?php echo $r['id']; ?></td>
+                                <td class="px-2 py-3 text-center"><?php echo $r['course']; ?></td>
+                                <td class="px-2 py-3 text-center"><?php echo $r['item_name']; ?></td>
+                                <td class="px-2 py-3 text-center"><?php echo $r['item_reason']; ?></td>
+                                <td class="px-2 py-3 text-center" src="./item_image/"><?php echo $r['image']; ?></td>
                                 <td class="d-flex justify-content-center text-center">
                                     <a href='function/approve.php?id=<?php echo $r['id'];?>'><button
-                                            class="rounded-md bg-blue-700 text-white p-2 m-2">ACCEPT</button></a>
+                                            class="rounded-md bg-blue-700 text-white font-medium p-2 m-2">ACCEPT</button></a>
                                     <a href='function/reject.php?id=<?php echo $r['id'];?>'
                                         onclick="return confirm('Are you sure you want to REJECT this request?')"><button
-                                            class="rounded-md bg-red-700 text-white p-2 m-2">REJECT</button></a>
+                                            class="rounded-md bg-red-700 text-white font-medium p-2 m-2">REJECT</button></a>
                                 </td>
                             </tr>
                         </tbody>
