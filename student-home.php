@@ -15,7 +15,7 @@
 
 <body>
     <a href="function/logout.php" class="inline-block rounded text-white bg-red-700 px-3 py-2 hover:text-black my-2 ml-3">
-        Log out
+        Log Out
     </a>
     <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-12 mb-4 ml-3">

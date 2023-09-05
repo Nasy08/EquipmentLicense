@@ -128,12 +128,6 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                                 messages</strong></a>
                     </div>
                 </div>
-                <div class="flex flex-row h-64 mt-6">
-                    <div class="bg-white rounded-xl shadow-lg px-6 py-4 w-4/12">
-                        a
-                    </div>
-
-                </div>
             </div>
         </div>
     </div>

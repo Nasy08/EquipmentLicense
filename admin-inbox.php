@@ -1,3 +1,9 @@
+<?php
+include_once "db/config.php";
+
+$result = mysqli_query($conn, "SELECT * FROM equipment ORDER BY id DESC");
+
+?>
 <html>
 
 <head>
@@ -9,7 +15,7 @@
 </head>
 
 <body>
-<nav>
+    <nav>
         <div class="bg-white text-blue-800 px-10 py-1 z-10 w-full shadow-md">
             <div class="flex items-center justify-between py-2 text-5x1">
                 <div class="font-bold text-blue-900 text-xl">Admin<span class="text-orange-600">Panel</span></div>
@@ -21,19 +27,20 @@
                 </div>
             </div>
         </div>
-</nav>
+    </nav>
     <section class="bg-gray-50 p-3 sm:p-5">
         <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
             <!-- Start coding here -->
             <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
-                <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+                <div
+                    class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div class="w-full md:w-1/2">
                         <form class="flex items-center">
                             <label for="simple-search" class="sr-only">Search</label>
                             <div class="relative w-full">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                    <svg aria-hidden="true" class="w-5 h-5 text-gray-500"
-                                        fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor"
+                                        viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd"
                                             d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
                                             clip-rule="evenodd" />
@@ -45,7 +52,8 @@
                             </div>
                         </form>
                     </div>
-                    <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+                    <div
+                        class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                         <div class="flex items-center space-x-3 w-full md:w-auto">
                             <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
                                 class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-white focus:outline-none bg-blue-900 rounded-lg border border-gray-200"
@@ -108,26 +116,39 @@
                     </div>
                 </div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <table class="w-full text-md text-gray-500 dark:text-gray-400">
+                        <thead class="text-md text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-4 py-3">Nama</th>
                                 <th scope="col" class="px-4 py-3">ID(NDP)</th>
                                 <th scope="col" class="px-4 py-3">Kursus</th>
                                 <th scope="col" class="px-4 py-3">Semester</th>
                                 <th scope="col" class="px-4 py-3">Peringkat</th>
-                                <th scope="col" class="px-2 py-3">Tindakan</th>
+                                <th scope="col" class="px-8 py-3">Tindakan</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr class="border-b dark:border-gray-700">
-                                <td class="px-4 py-3"><?php echo $r['name']; ?></td>
-                                <td class="px-4 py-3"><?php echo $r['id']; ?></td>
-                                <td class="px-4 py-3"><?php echo $r['course']; ?>300</td>
-                                <td class="px-4 py-3"><?php echo $r['sem']; ?></td>
-                                <td class="px-4 py-3 flex items-center justify-end">
+                        <tbody id="showiddata">
+                            <tr class="border-b">
+                                <?php
+                            $sql = "SELECT * FROM equipment WHERE id";
+                            $result = mysqli_query($conn, $sql); 
+                            while ($r = mysqli_fetch_array($result)){
+                            ?>
+                                <td class="px-4 py-3 text-left"><?php echo $r['name']; ?></td>
+                                <td class="px-4 py-3 text-center"><?php echo $r['id']; ?></td>
+                                <td class="px-4 py-3 text-center"><?php echo $r['course']; ?></td>
+                                <td class="px-4 py-3 text-center"><?php echo $r['sem']; ?></td>
+                                <td class="px-4 py-3 text-center"><?php echo $r['level']; ?></td>
+                                <td class="d-flex justify-content-center text-center">
+                                    <a href='function/approve.php?id=<?php echo $r['id'];?>'><button
+                                            class="rounded-md bg-blue-700 text-white p-2 m-2">ACCEPT</button></a>
+                                    <a href='function/reject.php?id=<?php echo $r['id'];?>'
+                                        onclick="return confirm('Are you sure you want to REJECT this request?')"><button
+                                            class="rounded-md bg-red-700 text-white p-2 m-2">REJECT</button></a>
+                                </td>
                             </tr>
                         </tbody>
+                        <?php } ?>
                     </table>
                 </div>
             </div>
