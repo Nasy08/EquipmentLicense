@@ -18,7 +18,7 @@
     <form action="function/login.php" method="POST">
         <input class="mb-4 p-2 appearance-none block w-full bg-gray-200 placeholder-gray-900 rounded border focus:border-teal-500" type="text" name="id" placeholder="ID">
         <input class="mb-4 p-2 appearance-none block w-full bg-gray-200 placeholder-gray-900 rounded border focus:border-teal-500" type="password" name="password" placeholder="Password">
-        <input class="ml-auto w-1/2 bg-gray-800 text-white p-2 rounded font-semibold hover:bg-gray-900" type="submit" value="Login">
+        <button class="ml-auto w-1/2 bg-gray-800 text-white p-2 rounded font-semibold hover:bg-gray-900" type="submit">Login</button> 
         <a href="register.php">Register</a>
     </form>
 </div>

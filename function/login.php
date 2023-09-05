@@ -31,17 +31,15 @@ if ($result->num_rows == 1) {
         $_SESSION['email'] = $row['email']; 
         $_SESSION['type'] = $row['type']; 
  
-        if ($row['type'] == 'admin') {
-            header("Location: ../admin-home.php"); // Redirect admin with jawatan=cafe to cafe orders page 
+        if ($row['id'] == 'id' && $row['password'] == 'password') { 
+        } else if ($row['type'] == 'admin') { 
+            header("Location: ../admin-home.php"); // Redirect non-admin users to this page
         } else if ($row['type'] == 'student') { 
-            header("Location: ../student-home.php"); // Redirect non-admin users to this page 
+          header("Location: ../student-home.php"); // Redirect non-admin users to this page         
         } else { 
-            echo "<script>alert('Invalid user type.'); window.location.href = 'login.php';</script>"; 
-        } 
-    } else { 
-        echo "<script>alert('Invalid login credentials.'); window.location.href = 'login.php';</script>"; 
-    } 
-} else { 
-    echo "<script>alert('Invalid login credentials.'); window.location.href = 'login.php';</script>"; 
+          echo "<script>alert('Invalid User Type')</script>";
+          echo "<script>window.location='../index.php'</script>";
+        }
+      }
 } 
 ?>
