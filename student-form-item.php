@@ -1,3 +1,49 @@
+<?php  
+ include("db/config.php");
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) { 
+    // Retrieve and sanitize form inputs 
+    $name = mysqli_real_escape_string($conn, $_POST['name']); 
+    $id = mysqli_real_escape_string($conn, $_POST['id']); 
+    $level = mysqli_real_escape_string($conn, $_POST['level']);
+    $course = mysqli_real_escape_string($conn, $_POST['course']);
+    $sem = mysqli_real_escape_string($conn, $_POST['sem']);
+    $item_name = mysqli_real_escape_string($conn, $_POST['item_name']);
+    $item_reason = mysqli_real_escape_string($conn, $_POST['item_reason']);
+    $imageName = ''; 
+
+    // Check if an image file was uploaded 
+    if ($_FILES['image']['error'] === 0) { 
+        // Define the directory where the image will be saved 
+        $uploadDir = 'item_image/'; 
+
+        // Generate a unique file name for the image 
+        $imageFileName = uniqid() . '_' . $_FILES['image']['name']; 
+
+        // Define the full path to save the image 
+        $imagePath = $uploadDir . $imageFileName; 
+
+        // Move the uploaded image to the specified directory 
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) { 
+            $imageName = $imageFileName; 
+        } else { 
+            echo "<script>alert('Failed to upload image.'); window.location.href = '../student-form-item.php';</script>"; 
+            exit; 
+        } 
+    } 
+
+    // Insert the menu item into the database 
+    $sql = "INSERT INTO equipment ( name, id, level, course, sem, item_name, item_reason, image)
+    VALUES ( '$name', '$id', '$level', '$course', '$sem', '$item_name', '$item_reason', '$imageName')";
+    $result = mysqli_query($conn, $sql); 
+    if ($result){
+        echo "<script>alert('Borang Anda Berjaya di hantar!')</script>";
+        
+    }else{ 
+        echo "<script>alert('Maaf, Anda tidak berjaya di hantar!')</script>";
+        echo "<script>window.location='../student-form-item.php'</script>";
+    }
+} 
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +69,7 @@
                     </div>
                 </div>
                 <div class="flex-auto px-4 lg:px-10 py-8 pt-4">
-                    <form id="form-item" action="function/send-form-item.php" method="POST">
+                    <form id="form-item" enctype="multipart/form-data" method="POST">
                         <div class="flex flex-wrap">
                             <div class="w-full lg:w-6/12 px-4">
                                 <div class="relative w-full mb-3">
@@ -120,15 +166,16 @@
                                 </div>
                             </div>
                         </div>
-                        <label class="block" for="file_input">Pilih Gambar [Letak Gambar Barangan Anda]</label>
-                        <input type="file" name="image">
+                        <label for="image">Pilih Gambar [Letak Gambar Barangan Anda]</label> 
+                            <input type="file" id="image" name="image">
 
                         <hr class="mt-6 border-b-1 border-blueGray-300">
-                        <button name="submit"
+                        <!-- <button name="submit"
                             class="bg-green-400 w-full text-white active:bg-pink-600 font-bold text-lg uppercase px-4 py-2.5 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                             type="submit">
                             SUBMIT
-                        </button>
+                        </button> -->
+                        <input type="submit" name="submit" value="Submit" class="bg-green-400 w-full text-white active:bg-pink-600 font-bold text-lg uppercase px-4 py-2.5 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
                     </form>
                 </div>
             </div>
